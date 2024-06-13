@@ -34,7 +34,7 @@ class RPUIFormStepState extends State<RPUIFormStep> {
       }
     }
 
-    if (widget.formStep.forceWait) {
+    if (widget.formStep.autoSkip && widget.formStep.forceWait) {
       if (timerFinished == false) {
         temp = false;
       }
