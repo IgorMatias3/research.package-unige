@@ -29,8 +29,12 @@ class RPUIDoubleQuestionBodyState extends State<RPUIDoubleQuestionBody>
 
   void _validate(String text, RPLocalizations? locale) {
     double value;
+
+    // Replace comma with dot for consistent decimal handling
+    String sanitizedText = text.replaceAll(',', '.');
+
     try {
-      value = double.parse(text);
+      value = double.parse(sanitizedText);
     } catch (error) {
       setState(() {
         _valid = false;
@@ -54,7 +58,7 @@ class RPUIDoubleQuestionBodyState extends State<RPUIDoubleQuestionBody>
       widget.onResultChange(null);
       return;
     }
-    widget.onResultChange(text);
+    widget.onResultChange(sanitizedText);
   }
 
   @override
