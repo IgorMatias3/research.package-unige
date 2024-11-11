@@ -24,6 +24,8 @@ class RPUIFormStepState extends State<RPUIFormStep> {
     if (stepResult == null) return;
 
     bool temp = true;
+
+    // Check each question to ensure that required questions have an answer
     for (var step in widget.formStep.questions) {
       if (!step.optional) {
         if (stepResult!.results.values.any((element) =>
@@ -34,15 +36,15 @@ class RPUIFormStepState extends State<RPUIFormStep> {
       }
     }
 
-    if (widget.formStep.autoSkip && widget.formStep.forceWait) {
-      if (timerFinished == false) {
-        temp = false;
-      }
+    // If forceWait is true, enforce the timer condition
+    if (widget.formStep.forceWait && !timerFinished!) {
+      temp = false;
     }
 
     setState(() {
       readyToProceed = temp;
     });
+
     createAndSendResult();
     blocQuestion.sendReadyToProceed(temp);
   }
